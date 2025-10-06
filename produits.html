@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Produits - AUX 4 SAISONS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c2c 100%);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .logo {
+            font-size: 1.5rem !important;
+            font-weight: 800 !important;
+            color: #ffd700 !important;
+            letter-spacing: 2px;
+        }
+
+        .header-space {
+            height: 80px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #4a7c2c 0%, #6fa842 100%);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            border: 2px solid #4a7c2c;
+            background: white;
+            color: #4a7c2c;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, #4a7c2c 0%, #6fa842 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .products-container {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .season-section {
+            margin-bottom: 4rem;
+        }
+
+        .season-title {
+            font-size: 2.5rem;
+            color: #2d5016;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .season-icon {
+            font-size: 3rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #4a7c2c 0%, #6fa842 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.8rem;
+            color: #2d5016;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .product-benefits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .benefit-tag {
+            padding: 0.3rem 0.8rem;
+            background: #e8f5e9;
+            color: #2d5016;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #2d5016 0%, #1a300d 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+            .filter-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html" class="logo">AUX 4 SAISONS</a></li>
+            <li><a href="produits.html">Nos Produits</a></li>
+            <li><a href="apropos.html">Qui sommes-nous</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-space"></div>
+
+    <div class="page-header">
+        <h1>Nos Fruits & Légumes</h1>
+        <p>Des produits frais et de qualité, au rythme des saisons</p>
+    </div>
+
+    <div class="filter-section">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-season="all">Tous</button>
+            <button class="filter-btn" data-season="printemps">🌸 Printemps</button>
+            <button class="filter-btn" data-season="ete">☀️ Été</button>
+            <button class="filter-btn" data-season="automne">🍂 Automne</button>
+            <button class="filter-btn" data-season="hiver">❄️ Hiver</button>
+        </div>
+    </div>
+
+    <div class="products-container">
+        <div class="season-section" data-season="printemps">
+            <h2 class="season-title"><span class="season-icon">🌸</span> Printemps</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">🍓</div>
+                    <div class="product-info">
+                        <h3>Fraises</h3>
+                        <p class="product-description">Fraises juteuses et sucrées, parfaites pour vos desserts</p>
+                        <div class="product-benefits">
+                            <span class="benefit-tag">Vitamine C</span>
+                            <span class="benefit-tag">Local</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🥬</div>
+                    <div class="product-info">
+                        <h3>Salades</h3>
+                        <p class="product-description">Laitues croquantes et fraîches du matin</p>
+                        <div class="product-benefits">
+                            <span class="benefit-tag">Bio</span>
+                            <span class="benefit-tag">Fraîcheur</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🥒</div>
+                    <div class="product-info">
+                        <h3>Concombres</h3>
+                        <p class="product-description">Croquants et rafraîchissants</p>
+                        <div class="product-benefits">
+                            <span class="benefit-tag">Hydratant</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🥕</div>
+                    <div class="product-info">
+                        <h3>Carottes Nouvelles</h3>
+                        <p class="product-description">Tendres et sucrées, parfaites crues ou cuites</p>
+                        <div class="product-benefits">
+                            <span class="benefit-tag">Vitamine A</span>
+                            <span class="benefit-tag">Bio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="season-section" data-season="ete">
+            <h2 class="season-title"><span class="season-icon">☀️</span> Été</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">🍅</div>
+                    <div class="product-info">
+                        <h3>Tomates</h3>
+                        <p class="product-description">Gorgées de soleil, parfaites pour vos salades d'été</p>
+                        <div class="product-benefits">
+                            <span class="benefit-tag">Lycopène</span>
+                            <span class="benefit-tag">Local</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🍑</div>
+                    <div class="product-info">
+                        <h3>Pêches</h3>
+                        <p class="product-description">Juteuses et parfumées à souhait</p>
+                        <div class="product-benefits">
+                            <span class="benefit-tag">Vitamines</span>
+                            <span class="benefit-tag">France</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🍉</div>
+                    <div class="product-info">
+                        <h3>Pastèques</h3>
+                        <p class="product-description">Rafraîchissantes et désaltérantes</p>
+                        <div class="product-benefits">
+                            <span class="benefit-tag">Hydratation</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🌶️</div>
+                    <div class="product-info">
+                        <h3>Poivrons</h3>
+                        <p class="product-description">Colorés et croquants, pleins de saveur</p>
+                        <div class="product-benefits">
+                            <span class="benefit-tag">Vitamine C</span>
+                            <span class="benefit-tag">Local</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🍇</div>
+                    <div class="product-info">
+                        <h3>Raisins</h3>
+                        <p class="product-description">Sucrés et juteux, parfaits en dessert</p>
+                        <div class="product-benefits">
+                            <span class="benefit-tag">Antioxydants</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🥗</div>
+                    <div class="product-info">
+                        <h3>Courgettes</h3>
+                        <p class="product-description">Tendres et polyvalentes en cuisine</p>
+                        <div class="product-benefits">
+                            <span class="benefit-tag">Léger</span>
+                            <span class="benefit-tag">Bio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="season-section" data-season="automne">
+            <h2 class="season-title"><span class="season-icon">🍂</span> Automne</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">🍎</div>
+                    <div class="product-info">
+                        <h3>Pommes</h3>
+                        <p class="product-description">Croquantes et juteuses, directement du verger</p>
+                        <div class="product-benefits">
+                            <span class="benefit-tag">Fibres</span>
+                            <span class="benefit-tag">Local</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🍐</div>
+                    <div class="product-info">
+                        <h3>Poires</h3>
+                        <p class="product-description">Fondantes et sucrées</p>
